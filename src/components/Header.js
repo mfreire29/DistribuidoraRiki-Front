@@ -6,7 +6,7 @@ function Header() {
     return (
         <>
             <header>
-                <Navbar/>
+                <Navbar hola={hola}/>
             </header>            
         </>
     )
