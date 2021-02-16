@@ -1,18 +1,21 @@
 # Tienda Online
 
-Proyecto de tienda online en React.js.
+Proyecto de tienda online en React.js y Firestore.
+
 El proyecto consta de as siguientes secciones:
 
 - HOME (listado general de productos)
 - CATEGORIA (listado de productos según categoría)
+- DETALLE PRODUCTO (descripción del producto)
 - CARRITO (Pantalla del carro)
+- CHECKOUT
 
 ## Instalación del Proyecto
 
 Desde la terminal, usa el siguiente comando:
 
 ```
-git clone https://github.com/mfreire29/demo.git
+git clone https://github.com/mfreire29/Curso.git
 ```
 
 ### `npm i`
@@ -38,4 +41,12 @@ Para compilar el proyecto debes correr el siguiente comando:
 
 ```
 npm run build
+```
+
+### `react-toastify`
+
+Para las notificaciones de la aplicación se ha utilizado lo sigueinte:
+
+```
+https://github.com/fkhadra/react-toastify.git
 ```
