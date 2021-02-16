@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from 'react-router-dom'
 import ItemList from './ItemList'
-//import {CartContext} from '../context/cartContext'
 
 function ItemListContainer({ greeting, data, loader }) {
   
@@ -20,9 +19,11 @@ function ItemListContainer({ greeting, data, loader }) {
       if(id) {
         const categoria = data.filter(a => a.category_id === parseInt(id) )
         setListado(categoria)
-        //console.log(data)
+
       } else {
+
         setListado(data)
+
       }
   
   }, [data, id])

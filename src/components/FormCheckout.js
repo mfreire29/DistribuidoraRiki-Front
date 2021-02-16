@@ -10,16 +10,17 @@ function FormCheckout({ setIdOrden, setNombreComprador }) {
     const [nombre, setNombre ] = useState('')
     const [telefono, setTelefono ] = useState('')
     const [email, setEmail ] = useState('')
+    const [email2, setEmail2 ] = useState('')
     const [loader, setLoader] = useState(false)
 
-    const { totalCarro, carro, setCarro, carroFinal, setCarroFinal, setUnidadesCarro, setTotalCarro, notify } = useContext(CartContext)
+    const { totalCarro, setCarro, carroFinal, setCarroFinal, setUnidadesCarro, setTotalCarro, notify } = useContext(CartContext)
 
     const finalizarCompra = e => {
-        console.log(carro)
         e.preventDefault()
         if(nombre === '') { notify('Debes completar tu nombre'); return}
         if(telefono === '') { notify('Debes completar tu teléfono'); return}
         if(email === '') { notify('Debes completar tu E-mail'); return}
+        if(email !== email2) { notify('¡Los correos deben coincidir!'); return}
         
         setLoader(true)
         const orden = {
@@ -29,7 +30,6 @@ function FormCheckout({ setIdOrden, setNombreComprador }) {
             total: totalCarro
         }
         setNombreComprador(nombre)
-        //console.log(orden)
 
         const db = Firestore
         const collection = db.collection("orders")
@@ -59,6 +59,9 @@ function FormCheckout({ setIdOrden, setNombreComprador }) {
                 </div>
                 <div className="form-group mb-3">
                     <input onChange={ e => setEmail(e.target.value)} className="form-control" type="text" placeholder="Email" value={ email }/>
+                </div>
+                <div className="form-group mb-3">
+                    <input onChange={ e => setEmail2(e.target.value)}  className="form-control" type="text" placeholder="Confirmar Email" value={ email2 }/>
                 </div>
                 <center>
                         { loader ? 

@@ -18,7 +18,6 @@ function ItemDetailContainer() {
       
         query
         .then((res) =>{
-          //console.log(res.data())
 
           const producto_final = {
             id : res.id,
@@ -32,22 +31,6 @@ function ItemDetailContainer() {
           console.log("falló")
         })
       }, [id])
-    
-    /* useEffect(()=>{
-
-
-        let dato = datproducto.filter(data => datproducto.id === id)
-        setProducto(dato)
-        setloader(false)
-                
-    }, [id, data]) */
-
-    const style = {
-        margin: "0.5em",
-        paddingLeft: 0,
-        listStyle: "none",
-        color: "#a9a9a9",
-      };
     
     return (
         <div>

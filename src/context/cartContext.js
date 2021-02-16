@@ -7,10 +7,35 @@ export const CartContext = createContext()
 
 const CartProvider = (props) => {
 
-    const [carro, setCarro] = useState([])
-    const [carroFinal, setCarroFinal] = useState([])
-    const [unidadesCarro, setUnidadesCarro] = useState(0)
-    const [totalCarro, setTotalCarro] = useState(0)
+    let carroStorage = JSON.parse(localStorage.getItem('carro'))
+    if(!carroStorage) {
+        carroStorage = []
+    }
+    let totalStorage = JSON.parse(localStorage.getItem('total'))
+    if(!totalStorage) {
+        totalStorage = 0
+    }
+    let unidadesStorage = JSON.parse(localStorage.getItem('unidades'))
+    if(!unidadesStorage) {
+        unidadesStorage = 0
+    }
+
+    const [carro, setCarro] = useState(carroStorage)
+    const [carroFinal, setCarroFinal] = useState(carroStorage)
+    const [unidadesCarro, setUnidadesCarro] = useState(unidadesStorage)
+    const [totalCarro, setTotalCarro] = useState(totalStorage)
+
+    useEffect( () => {
+        if (carroStorage) {
+          localStorage.setItem('carro', JSON.stringify(carro))
+          localStorage.setItem('total', JSON.stringify(totalCarro))
+          localStorage.setItem('unidades', JSON.stringify(unidadesCarro))
+        } else {
+          localStorage.setItem('carro', JSON.stringify([]))
+          localStorage.setItem('total', JSON.stringify([]))
+          localStorage.setItem('unidades', JSON.stringify([]))
+        }
+      }, [carro, carroStorage]);
 
     const notify = mensaje => toast.info(mensaje, 
         {
@@ -19,14 +44,25 @@ const CartProvider = (props) => {
         }
     );
 
-    const addItem = (item, title, quantity, price, pictureUrl) => {        
-        if(isInCart(item).length === 0) {
+    const addItem = (item, title, quantity, price, pictureUrl, stock) => {        
+        if(isInCart(item).length === 1) {
+            let un = carro.filter(a => a.id === item)
+            const carrito = carro.filter(a => a.id !== item)
+            if((quantity + un[0].quantity) > stock) {
+                notify('No hay suficiente stock')
+            } else {
+                setCarro([...carrito, { id: item, title: title, quantity: (quantity + un[0].quantity) , precio: price, pictureUrl: pictureUrl, total: (price*(quantity + un[0].quantity)) }])
+                setUnidadesCarro(unidadesCarro - un[0].quantity + (quantity + un[0].quantity))
+                setTotalCarro(totalCarro - (un[0].precio * un[0].quantity) + (price*(quantity + un[0].quantity)))
+                notify('Producto Agregado')
+            }
+        } else {
             setCarro([...carro, { id: item, title: title, quantity: quantity, precio: price, pictureUrl: pictureUrl, total: (price*quantity) }])
             setCarroFinal([...carroFinal, { id: item, title: title, quantity: quantity, precio: price, total: (price*quantity) }])
+            setUnidadesCarro(unidadesCarro + quantity)
+            setTotalCarro(totalCarro + (price*quantity))
+            notify('Producto Agregado')
         }
-        notify('Producto Agregado')
-        setUnidadesCarro(unidadesCarro + quantity)
-        setTotalCarro(totalCarro + (price*quantity))
     }
 
     const removeItem = (id, quantity) => {

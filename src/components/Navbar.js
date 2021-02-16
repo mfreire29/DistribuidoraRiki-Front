@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React from "react";
 import CartWidget from "./CartWidget";
 import { NavLink } from 'react-router-dom'
 
@@ -29,14 +29,24 @@ function Navbar() {
                   Home
                 </NavLink>
               </li>
-              <li className="nav-item" data-toggle="collapse" data-target=".navbar-collapse.show">
-                <NavLink to="/category/1" className="nav-link">
-                  Mujer
-                </NavLink>
+              <li className="nav-item dropdown">
+                <a className="nav-link dropdown-toggle" href="#" id="dropdown07" data-bs-toggle="dropdown" aria-expanded="false">Categorías</a>
+                <ul className="dropdown-menu" aria-labelledby="dropdown07">
+                  <li>
+                    <NavLink to="/category/1" className="dropdown-item">
+                      Mujer
+                    </NavLink>
+                  </li>
+                  <li>
+                    <NavLink to="/category/2" className="dropdown-item">
+                      Hombre
+                    </NavLink>
+                  </li>
+                </ul>
               </li>
               <li className="nav-item" data-toggle="collapse" data-target=".navbar-collapse.show">
-                <NavLink to="/category/2" className="nav-link">
-                  Hombre
+                <NavLink to="/cart" className="nav-link">
+                  Carrito
                 </NavLink>
               </li>
             </ul>
