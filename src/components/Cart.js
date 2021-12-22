@@ -37,10 +37,10 @@ function Cart({ greeting }) {
                             <path d="M12.14 8.753l-5.482 4.796c-.646.566-1.658.106-1.658-.753V3.204a1 1 0 0 1 1.659-.753l5.48 4.796a1 1 0 0 1 0 1.506z" />
                         </svg>
                         
-                        { greeting }
+                        <span className="px-2">{ greeting }</span> 
                         {
                             unidadesCarro > 0 ?
-                                        <button onClick={ vaciarCarro } className="btn btn-danger">Vaciar</button>
+                                        <button onClick={ vaciarCarro } className="btn btn-dark mb-2">Vaciar</button>
                             :
                                 ''
                         }
@@ -58,11 +58,11 @@ function Cart({ greeting }) {
 
                                     
                                     <hr/>
-                                    <h1 className="text-center">TOTAL: ${ totalCarro }.-
+                                    <h3 className="text-center">TOTAL: ${ totalCarro }.-
                                     <NavLink to="/checkout">
-                                        <button className="btn btn-danger">Finalizar Compra</button>
+                                        <button className="btn btn-dark mx-4">Finalizar Compra</button>
                                     </NavLink>
-                                    </h1>
+                                    </h3>
                                     </div>
                                 </div>
                                 :
@@ -70,7 +70,7 @@ function Cart({ greeting }) {
                                     <h1 className="text-center pt-3"> Tu carrito está vacío</h1>
                                     <h3 className="text-danger text-center">¿Qué esperás para llenarlo?</h3>
                                     <NavLink to="/">
-                                        <button className="btn btn-danger mt-3">Quiero empezar a comprar 😄</button>
+                                        <button className="btn btn-dark mt-3">Quiero empezar a comprar 😄</button>
                                     </NavLink>
                                 </div>
                         }

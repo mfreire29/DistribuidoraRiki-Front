@@ -1,86 +1,144 @@
-import React, { useState, useContext } from 'react'
-import {CartContext} from '../context/cartContext'
-import firebase from 'firebase'
-import { Firestore } from '../firebaseConfig'
+import React, { useState, useContext, useEffect } from 'react'
+import { CartContext } from '../context/cartContext'
+import FormValidate from './FormValidate'
+import clienteAxios from './AxiosConfig'
 import { NavLink } from 'react-router-dom'
 
 
 function FormCheckout({ setIdOrden, setNombreComprador }) {
 
-    const [nombre, setNombre ] = useState('')
-    const [telefono, setTelefono ] = useState('')
-    const [email, setEmail ] = useState('')
-    const [email2, setEmail2 ] = useState('')
+    const [nombre, setNombre] = useState('')
+    const [email, setEmail] = useState('')
+    const [cliente, setCliente] = useState([]);
     const [loader, setLoader] = useState(false)
+    const [emailValidate, setEmailValidate] = useState(false)
+    const [ msj, setMsj ] = useState('')
+    const [ active, setActive ] = useState(false)
 
-    const { totalCarro, setCarro, carroFinal, setCarroFinal, setUnidadesCarro, setTotalCarro, notify } = useContext(CartContext)
+    const { totalCarro, setCarro, carro, carroFinal, setCarroFinal, setUnidadesCarro, setTotalCarro, notify, clear } = useContext(CartContext)
+
+    useEffect(() => {
+        console.log(carro)
+        if(emailValidate){
+            if(cliente.active === 1){
+                setActive(true)
+            }
+        }
+    }, [emailValidate])
+
+    const comprobarEmail = e => {
+        e.preventDefault();
+        if (email === '') { notify('Debes completar tu E-mail'); return }
+
+        setLoader(true)
+
+        clienteAxios.post('/check', {
+            email
+        })
+            .then(function (response) {
+                console.log(response.data.length);
+                setCliente(response.data[0]);
+                if(response.data.length === 1){
+                    setEmailValidate(true)                 
+                } else {
+                    setMsj('Lo sentimos pero tu correo no se encuentra asociado a un cliente.')
+                }
+                setLoader(false)
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+
+    }
 
     const finalizarCompra = e => {
         e.preventDefault()
-        if(nombre === '') { notify('Debes completar tu nombre'); return}
-        if(telefono === '') { notify('Debes completar tu teléfono'); return}
-        if(email === '') { notify('Debes completar tu E-mail'); return}
-        if(email !== email2) { notify('¡Los correos deben coincidir!'); return}
-        
+
         setLoader(true)
-        const orden = {
-            buyer: {nombre, telefono, email},
-            items: carroFinal,
-            date: firebase.firestore.Timestamp.fromDate(new Date()),
-            total: totalCarro
-        }
+
         setNombreComprador(nombre)
 
-        const db = Firestore
-        const collection = db.collection("orders")
-
-        collection
-        .add(orden)
-        .then((res) => {
-            setTimeout(() => { setIdOrden(res.id)}, 3000);        
-            setTimeout(() => { setCarro([])}, 3000);        
-            setTimeout(() => { setCarroFinal([])}, 3000);        
-            setTimeout(() => { setUnidadesCarro(0)}, 3000);        
-            setTimeout(() => { setTotalCarro(0)}, 3000);        
+        clienteAxios.post('/pedidos', {
+            cliente_id: cliente.id,
+            subtotal: totalCarro,
+            descuento: '0',
+            total: totalCarro,
+            items: carro,
         })
-        .catch((err) => {
-            console.log(err)
-        })
+            .then(function (response) {
+                setTimeout(() => {
+                    console.log(response);
+                    setLoader(false)
+                    setIdOrden(true)
+                    clear()
+                }, 3000);                
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
     }
 
     return (
-        <div className="mt-5">
-            <form onSubmit={ finalizarCompra }>
-                <div className="form-group mb-3">
-                    <input onChange={ e => setNombre(e.target.value)} className="form-control" type="text" placeholder="Nombre" value={ nombre }/>
-                </div>
-                <div className="form-group mb-3">
-                    <input onChange={ e => setTelefono(e.target.value)} className="form-control" type="tel" placeholder="Teléfono" value={ telefono }/>
-                </div>
-                <div className="form-group mb-3">
-                    <input onChange={ e => setEmail(e.target.value)} className="form-control" type="text" placeholder="Email" value={ email }/>
-                </div>
-                <div className="form-group mb-3">
-                    <input onChange={ e => setEmail2(e.target.value)}  className="form-control" type="text" placeholder="Confirmar Email" value={ email2 }/>
-                </div>
-                <center>
-                        { loader ? 
-                            <div className="text-center my-3">
-                                <p className="animate__animated animate__backInLeft">Estamos preparando tu bolsa &#128540;</p>
-                                <div className="spinner-border" role="status">
-                                </div>
-                            </div> 
-                        :
-                            ''
+        <div className="my-3">
+            {
+                !emailValidate ?
+                    <>
+                        <div class="alert alert-danger" role="alert">
+                            :: RECORDÁ QUE SI NO ESTÁS REGISTRADO NO PODRÁS AVANZAR<br />
+                            <p className='pt-3 text-muted'>
+                                Si querés realizar un pedido y aún no sos cliente, contactate con nosotros al siguiente teléfono 1134020429 o escribinos por Whatsapp
+                                haciendo click aquí.
+                            </p>
+                        </div>
+                        <FormValidate comprobarEmail={comprobarEmail} setEmail={setEmail} msj={msj} email={email} loader={loader} emailValidate={emailValidate} setEmailValidate={setEmailValidate} />                        
+                    </>
+                    :
+                    <form onSubmit={finalizarCompra}>
+                        <h3 className='center pt-3'>¡Hola {cliente.name}! 👋🏼</h3>
+                        {
+                            active ?
+                                <p className='text-muted'>Ya estamos listos para que finalices tu pedido.</p>
+                            :
+                            <p style={{color: 'red'}}>Lo sentimos, pero tu pedido no puede ser procesado, ponte en contacto con nosotros.</p>
                         }
-                    <NavLink to="/cart">
-                        <button className="btn btn-danger m-1">Carrito</button>
-                    </NavLink>
-                    <button className="btn btn-danger m-1">Finalizar Compra</button>
-                </center>
-            </form>
+                        {
+                            active ?
+                                <>
+                                    <div className="form-group mb-3 pt-4">
+                                        <input className="form-control" type="text" placeholder="Nombre" value={`${cliente.name} ${cliente.last_name}`} readOnly/>
+                                    </div>
+                                    <div className="form-group mb-3">
+                                        <input onChange={e => setEmail(e.target.value)} className="form-control" type="text" placeholder="Email" value={email} readOnly/>
+                                    </div>
+                                </>
+                            :
+                                ''
+                        }
+                        <center>
+                            {loader ?
+                                <div className="text-center my-3">
+                                    <p className="animate__animated animate__backInLeft">Estamos finalizando tu pedido &#128540;</p>
+                                    <div className="spinner-border" role="status">
+                                    </div>
+                                </div>
+                                :
+                                ''
+                            }
+                            <NavLink to="/cart">
+                                <button className="btn btn-danger m-1">Carrito</button>
+                            </NavLink>
+                            {
+                                active ?
+                                    <button className="btn btn-danger m-1 finalizar-compra">Finalizar Compra</button>
+                                :
+                                    ''
+                            }
+                        </center>
+                    </form>
+            }
         </div>
     )
 }
+
 
 export default FormCheckout

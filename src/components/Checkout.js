@@ -41,7 +41,7 @@ function Checkout({ greeting }) {
                         
                                 { idOrden === null ? 
                                     totalCarro !== 0 ?
-                                    <div className="container-fluid">
+                                    <div className="container-fluid my-5">
                                         <div className="row">
                                             <div className="col-xs-12 col-sm-6">
                                                 <div className="container">
@@ -55,16 +55,16 @@ function Checkout({ greeting }) {
                                                 </div>
                                             </div>
                                             <div className="col-xs-12 col-sm-6">
-                                                <h1 className="text-center">El importe a abonar es: ${ totalCarro }.-</h1>
+                                                <h1 className="text-left">TOTAL: ${ totalCarro }.-</h1>
                                                 <FormChekout setIdOrden={ setIdOrden } setNombreComprador= { setNombreComprador } />
                                             </div>
                                         </div>
                                     </div>
                                     :
                                     <div className="container">
-                                        <div className="row">
+                                        <div className="row mt-5">
                                             <div className="text-center">   
-                                                <h1 className="text-center pt-3"> Tu carrito está vacío</h1>
+                                                <h1 className="text-center pt-5"> Tu carrito está vacío</h1>
                                                 <h3 className="text-danger text-center">¿Qué esperás para llenarlo?</h3>
                                                 <NavLink to="/">
                                                     <button className="btn btn-danger mt-3">Quiero empezar a comprar 😄</button>
@@ -77,7 +77,7 @@ function Checkout({ greeting }) {
                                     <div className="container">
                                         <div className="row">
                                             <div className="animate__animated animate__backInLeft">
-                                                <h1 className="text-center text-success pt-3">¡Gracias por tu compra { nombreComprador }!</h1>
+                                                <h1 className="text-center text-success pt-5">¡Gracias por tu compra { nombreComprador }!</h1>
                                                 <h3 className="text-center text-muted pb-3">Nos vemos pronto &#128521;</h3>
                                                 <h1 className="text-center">
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="128" height="128" fill="currentColor" className="bi bi-bag-check" viewBox="0 0 16 16">
@@ -85,8 +85,6 @@ function Checkout({ greeting }) {
                                                     <path d="M8 1a2.5 2.5 0 0 1 2.5 2.5V4h-5v-.5A2.5 2.5 0 0 1 8 1zm3.5 3v-.5a3.5 3.5 0 1 0-7 0V4H1v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V4h-3.5zM2 5h12v9a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V5z"/>
                                                 </svg>
                                                 </h1>
-                                                <p className="p-0 m-0 mt-4 text-center">Identificador de tu pedido:</p>
-                                                <p className="p-0 m-0 text-center"><b>{ idOrden }</b></p>
                                                 <center>
                                                     <NavLink to="/">
                                                         <button className="btn btn-dark add">Volver al Inicio</button>

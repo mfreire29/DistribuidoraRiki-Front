@@ -5,9 +5,11 @@ import Footer from './components/Footer'
 import ItemDetailContainer from './components/ItemDetailContainer'
 import ItemListContainer from './components/ItemListContainer'
 import Cart from './components/Cart'
-import { Firestore } from './firebaseConfig'
+import clienteAxios from './components/AxiosConfig'
 import CartProvider from './context/cartContext'
 import Checkout from './components/Checkout'
+import ScrollToTop from './components/ScrollToTop'
+import Search from './components/Search'
 
 const App = () => {
 
@@ -16,34 +18,23 @@ const App = () => {
 
   useEffect(() => {
 
-    const db = Firestore
-    const collection = db.collection("items")
-    const query = collection.get()
+    const getProducts = async () => {
+      //console.log("empieza el getmepresa");
+      await clienteAxios
+        .get(`/news`)
+        .then((res) => {
+          const data = res.data;
+          setListado(data);
+          setLoader(false)
+          console.log(data)
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    };
 
-    query
-    .then((res) =>{
+    getProducts();
 
-      const items_array = res.docs
-      
-      let items_obtenidos = []
-
-      items_array.forEach(item => {
-
-        const producto_final = {
-          id : item.id,
-          ...item.data()
-        }
-
-        items_obtenidos.push(producto_final)
-        
-        setLoader(false)
-        
-      })
-      setListado(items_obtenidos)
-    })
-    .catch(() => {
-      console.log("falló")
-    })
   }, [])
 
 
@@ -51,9 +42,10 @@ const App = () => {
       <CartProvider>
         <BrowserRouter>
         <Header/>
+        <ScrollToTop />
         <Switch>
           <Route exact path="/">
-            <ItemListContainer greeting="Listado de Productos" data={ listado } loader={ loader } />
+            <ItemListContainer greeting="Novedades" data={ listado } loader={ loader } />
           </Route>
           <Route exact path="/category/:id">
             <ItemListContainer greeting="Listado de Productos" data={ listado } loader={ loader }/>
@@ -66,6 +58,9 @@ const App = () => {
           </Route>
           <Route exact path="/checkout">
             <Checkout greeting="Finalizando tu Compra"/>
+          </Route>
+          <Route exact path="/search/:s">
+            <Search greeting="Finalizando tu Compra" loader={ loader }/>
           </Route>
         </Switch>
         <Footer/>

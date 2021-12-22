@@ -5,9 +5,9 @@ function ItemCount({ stock, initial, onAdd, enCarro}) {
     const [cantidad, setCantidad] = useState(initial) 
 
     const aumentarCantidad = () => {
-        if(stock > 0 && cantidad < stock) {
+        
             setCantidad(cantidad+1)
-        }
+        
     }
     
     const reducirCantidad = () => {
@@ -17,8 +17,8 @@ function ItemCount({ stock, initial, onAdd, enCarro}) {
     }
 
     const cantidadAdd = () => {
-        setCantidad(cantidad)
         onAdd(cantidad)
+        setCantidad(1)
     }
 
     return (
@@ -26,18 +26,11 @@ function ItemCount({ stock, initial, onAdd, enCarro}) {
 
             <div className="item-count mx-auto">
                 <button className="btn btn-dark left" onClick = { reducirCantidad }>-</button>  
-                <span>{stock > 0 ? cantidad : 0}</span>
+                <span>{cantidad}</span>
                 <button className="btn btn-dark right" onClick = { aumentarCantidad }>+</button>
             </div>
-                {
-                    stock > 0 ? 
                         <button className="btn btn-dark add" onClick = { cantidadAdd }>Agregar al Carrito</button>    
-                    :
-                        enCarro ?
-                        ''
-                        :
-                        <button className="btn text-danger add">SIN STOCK</button>
-                }
+                    
         </>
     )
 }

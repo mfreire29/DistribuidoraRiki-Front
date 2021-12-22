@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
+import clienteAxios from './AxiosConfig'
 import ItemDetail from './ItemDetail'
-import { Firestore } from '../firebaseConfig'
-
 
 function ItemDetailContainer() {
 
@@ -12,24 +11,23 @@ function ItemDetailContainer() {
 
     useEffect(() => {
 
-        const db = Firestore
-        const collection = db.collection("items").doc(id)
-        const query = collection.get()
-      
-        query
-        .then((res) =>{
+        const getProduct = async () => {
+          //console.log("empieza el getmepresa");
+          await clienteAxios
+            .get(`/products/${id}`)
+            .then((res) => {
+              const data = res.data;
+              setProducto(data);
+              setLoader(false)
+              console.log(data)
+            })
+            .catch((err) => {
+              console.log(err);
+            });
+        };
+    
+        getProduct();
 
-          const producto_final = {
-            id : res.id,
-            ...res.data()
-          }
-        
-          setProducto(producto_final)
-          setLoader(false)
-        })
-        .catch(() => {
-          console.log("falló")
-        })
       }, [id])
     
     return (
@@ -42,7 +40,7 @@ function ItemDetailContainer() {
                                 </div>
                             </div> 
                         :
-                            <ItemDetail key={producto.id} id={producto.id} title={producto.title} description={producto.description} price={producto.price} stock={producto.stock} pictureUrl={producto.pictureUrl}/>
+                            <ItemDetail key={producto.id} id={producto.id} title={producto.name} description={producto.description} price={producto.price} pictureUrl={producto.image}/>
                     }
                                        
                 </div>

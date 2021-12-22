@@ -35,11 +35,12 @@ const CartProvider = (props) => {
           localStorage.setItem('total', JSON.stringify([]))
           localStorage.setItem('unidades', JSON.stringify([]))
         }
-      }, [carro, carroStorage]);
+        if(carro.length === 0){ setTotalCarro(0)}
+      }, [carro, carroStorage, totalCarro]);
 
     const notify = mensaje => toast.info(mensaje, 
         {
-            position: toast.POSITION.TOP_RIGHT,
+            position: toast.POSITION.BOTTOM_CENTER,
             autoClose: 5000
         }
     );
@@ -51,27 +52,31 @@ const CartProvider = (props) => {
             if((quantity + un[0].quantity) > stock) {
                 notify('No hay suficiente stock')
             } else {
-                setCarro([...carrito, { id: item, title: title, quantity: (quantity + un[0].quantity) , precio: price, pictureUrl: pictureUrl, total: (price*(quantity + un[0].quantity)) }])
+                setCarro([...carrito, { id: item, title: title, quantity: (quantity + un[0].quantity) , precio: (price.replace(',', '.')), pictureUrl: pictureUrl, total: ((price.replace(',', '.'))*(quantity + un[0].quantity)) }])
                 setUnidadesCarro(unidadesCarro - un[0].quantity + (quantity + un[0].quantity))
-                setTotalCarro(totalCarro - (un[0].precio * un[0].quantity) + (price*(quantity + un[0].quantity)))
-                notify('Producto Agregado')
+                setTotalCarro(totalCarro - (un[0].precio * un[0].quantity) + ((price.replace(',', '.'))*(quantity + un[0].quantity)))
+                notify('✅ Producto Agregado 😁')
             }
         } else {
-            setCarro([...carro, { id: item, title: title, quantity: quantity, precio: price, pictureUrl: pictureUrl, total: (price*quantity) }])
-            setCarroFinal([...carroFinal, { id: item, title: title, quantity: quantity, precio: price, total: (price*quantity) }])
+            setCarro([...carro, { id: item, title: title, quantity: quantity, precio: (price.replace(',', '.')), pictureUrl: pictureUrl, total: ((price.replace(',', '.'))*quantity) }])
+            setCarroFinal([...carroFinal, { id: item, title: title, quantity: quantity, precio: (price.replace(',', '.')), total: ((price.replace(',', '.'))*quantity) }])
             setUnidadesCarro(unidadesCarro + quantity)
-            setTotalCarro(totalCarro + (price*quantity))
-            notify('Producto Agregado')
+            setTotalCarro(totalCarro + ((price.replace(',', '.'))*quantity))
+            notify('✅ Producto Agregado 😁')
         }
     }
 
     const removeItem = (id, quantity) => {
+        if(totalCarro < 0) {
+            clear()
+        }
         let un = carro.filter(a => a.id === id)
         setUnidadesCarro(unidadesCarro - un[0].quantity)
         setTotalCarro(totalCarro - (un[0].precio * un[0].quantity))
         const carrito = carro.filter(a => a.id !== id)
         setCarro(carrito)
-        notify('Producto Eliminado')
+        console.log('Este es el carro ', carro)
+        notify('Producto Eliminado 😔')
     }
 
     const clear = () => {

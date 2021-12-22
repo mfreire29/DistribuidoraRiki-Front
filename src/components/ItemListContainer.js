@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from 'react-router-dom'
 import ItemList from './ItemList'
+import clienteAxios from "./AxiosConfig";
 
 function ItemListContainer({ greeting, data, loader }) {
   
@@ -13,20 +14,32 @@ function ItemListContainer({ greeting, data, loader }) {
 
   const { id } = useParams()
   const [listado, setListado] = useState([])
+  const [category, setCategory ] = useState('')
 
-  useEffect(()=>{
+  useEffect(() => {
 
-      if(id) {
-        const categoria = data.filter(a => a.category_id === parseInt(id) )
-        setListado(categoria)
-
-      } else {
-
-        setListado(data)
-
-      }
+    if(id) {
+      const getProducts = async () => {
+        //console.log("empieza el getmepresa");
+        await clienteAxios
+          .get(`/category/${id}`)
+          .then((res) => {
+            const data = res.data;
+            setListado(data.products);
+            setCategory(data.category[0].name);
+            console.log(data.category[0].name)
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      };
   
-  }, [data, id])
+      getProducts();
+    } else {
+      setListado(data)
+    }
+
+  }, [data,id])
 
   return (
     <>
@@ -44,7 +57,12 @@ function ItemListContainer({ greeting, data, loader }) {
                   >
                     <path d="M12.14 8.753l-5.482 4.796c-.646.566-1.658.106-1.658-.753V3.204a1 1 0 0 1 1.659-.753l5.48 4.796a1 1 0 0 1 0 1.506z" />
                   </svg>
-                  {greeting}
+                  {
+                    id ?
+                      category
+                    :
+                      greeting
+                  }
                 </p>    
               </div>
               <ItemList listado={ listado } loader={ loader }/>
