@@ -32,7 +32,7 @@ function ItemDetailContainer() {
     
     return (
         <div>
-            <div className="container-fluid">
+            <div className="container">
                 <div className="row">
                     { loader ? 
                             <div className="text-center mt-5">

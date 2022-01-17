@@ -19,7 +19,13 @@ a {
 }
 
 .img-fluid {
-  width: 100%;
+  width: 200px;
+  height: 200px;
+  object-fit: contain;
+
+}
+.img-fluid:hover {
+  opacity: 0.8 !important;
 }
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
@@ -150,6 +156,7 @@ background-color: black;}
   margin-left: -1px;
   border-radius: 0px;
   font-size: 13px;
+  cursor: pointer !important;
 }
 .btn.add:hover {
   background-color: black;
@@ -374,6 +381,7 @@ input:focus {
   border-radius: 0px;
   width: 50px;
   display: inline-block;
+  cursor: pointer;
 }
 
 .dropdown-item.active, .dropdown-item:active {

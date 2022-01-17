@@ -65,7 +65,7 @@ function Navbar() {
               </li>
               <li className="nav-item" data-toggle="collapse" data-target=".navbar-collapse.show">
                 <NavLink to="/cart" className="nav-link">
-                  Contacto
+                  Carrito
                 </NavLink>
               </li>
             </ul>

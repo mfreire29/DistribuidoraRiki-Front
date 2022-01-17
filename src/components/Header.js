@@ -30,7 +30,7 @@ function Header() {
         const getSliders = async () => {
             //console.log("empieza el getmepresa");
             await clienteAxios
-                .get(`/sliders/`)
+                .get(`/sliders`)
                 .then((res) => {
                     const data = res.data;
                     setSliders(data);
@@ -62,10 +62,10 @@ function Header() {
                             return <div>
                                         {
                                             a.link === null ?
-                                            <img className="img-fluid" src={`http://localhost:8000/images/slides/${a.image}`} />
+                                            <img className="img-fluid" src={`http://66.97.46.222/images/slides/${a.image}`} />
                                             :
                                             <a href={a.link} >
-                                                <img className="img-fluid" src={`http://localhost:8000/images/slides/${a.image}`} />
+                                                <img className="img-fluid" src={`http://66.97.46.222/images/slides/${a.image}`} />
                                             </a>
                                         }
                                     </div>

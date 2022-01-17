@@ -19,7 +19,7 @@ function DetalleItem( { id, title, price, quantity, pictureUrl } ) {
 </svg>
             </button> 
             <NavLink to={`/item/`+ id} >
-                <img src={`http://localhost:8000/images/${pictureUrl}`} className="img-fluid animate__animated animate__fadeIn" alt={title}/>
+                <img src={`http://66.97.46.222/images/${pictureUrl}`} className="img-fluid animate__animated animate__fadeIn" alt={title}/>
             </NavLink>
             <h5 className="card-title text-center my-0 py-0 pt-2">
                 <NavLink to={`/item/`+ id} className="product-title" >

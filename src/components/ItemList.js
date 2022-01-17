@@ -20,7 +20,7 @@ function ItemList({ listado, loader }) {
                 {
                     listado.length > 0 ?
                         listado.map(a => {
-                            return <Item key={a.id} id={a.id} title={a.name} description={a.description} price={a.price} pictureUrl={a.image} />
+                            return <Item key={a.id} id={a.id} title={a.name} description={a.description} price={a.sale} off={a.off} pictureUrl={a.image} />
                         })
                     :
                         <p className='text-center'>No hay productos en esta categoría.</p>

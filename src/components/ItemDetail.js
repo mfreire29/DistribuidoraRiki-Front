@@ -13,12 +13,12 @@ function ItemDetail({ id, title, stock, description, price, pictureUrl }) {
     return (
         <div className="row">  
             <div className="col-xs-12 col-sm-6 p-0">
-                <img src={`http://localhost:8000/images/${pictureUrl}`} className="img-fluid animate__animated animate__fadeInLeft" alt={ description }/>
+                <img src={`http://66.97.46.222/images/${pictureUrl}`} className="img-fluid animate__animated animate__fadeInLeft" alt={ description }/>
             </div>
-            <div className="col-xs-12 col-sm-6 p-5">
-                <h1>{ title }</h1>
+            <div className="col-xs-12 col-sm-6 p-5 text-center mt-5">
+                <h3>{ title }</h3>
                 <h5>{ description }</h5>
-                <h1 className="mt-2 text-left"><span className="text-danger"><b>${ price }.-</b></span><br/>pesos argentinos</h1>
+                <h3 className="mt-2 text-left"><span className="text-danger"><b>${ price }.-</b></span><br/>pesos argentinos</h3>
                 <div className="my-5 text-center">
                     {/* {
                         isInCart(id).length > 0 ?
