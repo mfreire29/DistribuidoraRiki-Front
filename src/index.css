@@ -19,6 +19,10 @@ a {
 }
 
 .img-fluid {
+width: 100%;
+
+}
+.img-item {
   width: 200px;
   height: 200px;
   object-fit: contain;
@@ -132,30 +136,43 @@ a.dropdown-item.active {
 }
 
 .btn.right {
-  border-radius: 0px;
+  border: none;
   height: 35px;
   width: 35px;
+  font-size: 20px;
   outline: none;
 }
 
 .btn.left {
-  border-radius: 0px;
+  border: none;
   width: 35px;
   height: 35px;
+  font-size: 20px;
 }
 
 .btn.left:hover, .btn.right:hover {
-background-color: black;}
+  background-color: white;
+  color: black;
+}
+
+.btn.left:active, .btn.right:active {
+  background-color: white;
+  color: red;
+}
+
+.btn.left:focus, .btn.right:focus {
+  background-color: white !important;
+  color: tomato;
+}
 
 .btn.add {
-  border-radius: 20px;
   height: auto;
   width: auto;
   max-width: 148px;
   margin-top: 7px;
   margin-left: -1px;
-  border-radius: 0px;
   font-size: 13px;
+  border-radius: 20px !important;
   cursor: pointer !important;
 }
 .btn.add:hover {
@@ -164,7 +181,6 @@ background-color: black;}
 .btn-dark {
   background-color: white;
   border: 1px solid black;
-  border-radius: 20px !important;
   color: black;
 }
 
@@ -386,4 +402,23 @@ input:focus {
 
 .dropdown-item.active, .dropdown-item:active {
   background-color: #f86f6f;
+}
+
+.contenedor-oferta {
+  position: relative;
+
+}
+
+.oferta {
+  position: absolute;
+  right: 0;
+  top: 0;
+  background-color: red;
+  height: 40px;
+  width: 100px;
+  color: white;
+  z-index: 2000;
+  padding-top: 1px;
+  font-size: 25px;
+  border-radius: 0 0px 0 10px;
 }
