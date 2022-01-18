@@ -411,9 +411,9 @@ input:focus {
 
 .oferta {
   position: absolute;
-  right: 0;
-  top: 0;
-  background-color: red;
+  right: -7px;
+  top: -7px;
+  background-color: black;
   height: 40px;
   width: 100px;
   color: white;
