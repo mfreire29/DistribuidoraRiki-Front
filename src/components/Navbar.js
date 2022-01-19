@@ -36,7 +36,7 @@ function Navbar() {
       <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
 
         <div class="container-fluid">
-          <NavLink to="/" className="navbar-brand border-right m-5 text-dark">
+          <NavLink to="/" className="navbar-brand border-right text-dark">
             Distribuidora Riki
           </NavLink>
           <button class="navbar-toggler collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">

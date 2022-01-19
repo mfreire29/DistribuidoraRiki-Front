@@ -34,7 +34,7 @@ function Item({id, title, description, price, off, pictureUrl}) {
                         <NavLink to={`/item/`+ id} className="product-title" >
                             {
                                 title.length > 30 ?
-                                    <>{title.substring(0, 40)}...</>
+                                    <>{title.substring(0, 30)}...</>
                                 :
                                     title
                             }
