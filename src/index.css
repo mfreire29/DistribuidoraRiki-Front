@@ -23,8 +23,9 @@ a {
 }
 .img-item {
   width: 200px;
-  height: 200px;
+  height: auto;
   object-fit: contain;
+  margin: 20px 0;
 }
 .img-fluid:hover {
   opacity: 0.8 !important;
@@ -313,6 +314,7 @@ a.dropdown-item.active {
 .form-control {
   border-radius: 20px;
   border: 1px solid #000000;
+  padding: 10px 20px;
 }
 
 .form-control::placeholder {
@@ -342,6 +344,7 @@ input:focus {
 
 .show {
   color: grey !important;
+  transition: all 0.3s ease-in;
 }
 
 .navbar-nav .dropdown-menu {
@@ -425,16 +428,22 @@ input:focus {
   border-radius: 0 0px 0 10px;
 }
 
+.btn-cart {
+  text-align: center;
+}
+
 @media (max-width: 576px) {
   .navbar-toggler {
     color: #000000;
     background-color: #000000;
+    margin-left: auto;
   }
   .navbar-collapse {
     position: absolute;
     left: 0;
     top: 60px;
     padding: 30px 25px;
+    transition: all 0.6s ease-in-out;
     background-color: #ffffffcc;
   }
   .navbar-collapse ul li a {
@@ -443,7 +452,7 @@ input:focus {
   }
   .dropdown-menu {
     margin-top: -9px;
-    border-radius: 20px;
+    border-radius: 25px;
     border: 1px solid #000000;
   }
   .dropdown-toggle::after {
@@ -453,7 +462,24 @@ input:focus {
   .img-item {
     height: fit-content;
   }
-  .btn-cart {
-    text-align: center;
+  .titulo-pagina {
+    font-size: 18px;
+  }
+  .vaciar {
+    margin-left: 20px;
+  }
+  .dropdown-item {
+    margin: 0 !important;
+    line-height: 18px;
+  }
+  .navbar-nav,
+  .d-flex {
+    opacity: 0;
+    transition: all 0.9s ease-in-out;
+    transition-delay: 1s;
+  }
+  .trans {
+    transition: all 0.9s ease-in-out;
+    opacity: 1;
   }
 }

@@ -83,7 +83,7 @@ function FormCheckout({ setIdOrden, setNombreComprador }) {
             {
                 !emailValidate ?
                     <>
-                        <div class="alert alert-danger" role="alert">
+                        <div className="alert alert-danger" role="alert">
                             :: RECORDÁ QUE SI NO ESTÁS REGISTRADO NO PODRÁS AVANZAR<br />
                             <p className='pt-3 text-muted'>
                                 Si querés realizar un pedido y aún no sos cliente, contactate con nosotros al siguiente teléfono 1134020429 o escribinos por Whatsapp

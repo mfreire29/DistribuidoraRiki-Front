@@ -8,6 +8,7 @@ function Navbar() {
 
   const [categories, setCategories] = useState([])
   const [search, setSearch] = useState('')
+  const [show, setShow] = useState(false)
 
 
   useEffect(() => {
@@ -30,22 +31,28 @@ function Navbar() {
 
   }, [])
 
+
+
+  const cerrar = () => {
+    setShow(!show)
+  }
+
   return (
     <>
 
-      <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+      <nav className="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
 
-        <div class="container-fluid">
+        <div className="container-fluid">
           <NavLink to="/" className="navbar-brand border-right text-dark">
             Distribuidora Riki
           </NavLink>
-          <button class="navbar-toggler collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
+          <button  onClick={cerrar} className="navbar-toggler collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+            <span className="navbar-toggler-icon"></span>
           </button>
-          <div class="navbar-collapse collapse" id="navbarCollapse">
-            <ul class="navbar-nav me-auto mb-2 mb-md-0 d-flex">
+          <div className={show === false ? 'navbar-collapse collapse' : 'navbar-collapse collapse show'} id="navbarCollapse">
+            <ul className={show === false ? 'navbar-nav me-auto mb-2 mb-md-0 d-flex' : 'navbar-nav me-auto mb-2 mb-md-0 d-flex trans'} >
               <li className="nav-item" data-toggle="collapse" data-target=".navbar-collapse.show">
-                <NavLink to="/" className="nav-link">
+                <NavLink onClick={cerrar} to="/" className="nav-link">
                   Home
                 </NavLink>
               </li>
@@ -64,29 +71,31 @@ function Navbar() {
                 </ul>
               </li>
               <li className="nav-item" data-toggle="collapse" data-target=".navbar-collapse.show">
-                <NavLink to="/cart" className="nav-link">
+                <NavLink onClick={cerrar} to="/cart" className="nav-link">
                   Carrito
                 </NavLink>
               </li>
             </ul>
-            <div class="d-flex">
-              <input class="form-control me-2" type="search" onChange={ e => { setSearch(e.target.value) }} placeholder="Buscar" aria-label="Search" value={search} />
+            <div className={show === false ? 'd-flex' : 'd-flex trans'}>
+              <input className="form-control me-2" type="search" onChange={ e => { setSearch(e.target.value) }} placeholder="Buscar" aria-label="Search" value={search} />
               {
                 search.length < 3 ?
-                <button class="btn" type="submit">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                <button onClick={cerrar} className="btn" type="submit">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-search" viewBox="0 0 16 16">
                   <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
                 </svg>
               </button>
               :
               <NavLink to={`/search/${search}`} >
-              <button class="btn" type="submit">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+              <button onClick={cerrar} className="btn" type="submit">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-search" viewBox="0 0 16 16">
                   <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
                 </svg>
               </button>
               </NavLink>
               }
+            </div>
+          </div>
               <CartWidget />
               <div className="whatsapp" >
                 <a href="https://api.whatsapp.com/send?phone=5491134020429&text=%Probando">
@@ -94,8 +103,6 @@ function Navbar() {
                 <img src={whatsapp} />
                 </a>
               </div>
-            </div>
-          </div>
         </div>
       </nav>
     </>
