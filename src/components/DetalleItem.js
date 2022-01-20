@@ -12,12 +12,14 @@ function DetalleItem( { id, title, price, quantity, pictureUrl } ) {
 
     return (
       <>
+          <div className="col-sm-1"></div>
           <div className="col-6 col-sm-4 my-3 text-center delete-padre">
             <NavLink to={`/item/`+ id} >
                 <img src={`http://66.97.46.222/images/${pictureUrl}`} className="img-fluid img-item animate__animated animate__fadeIn" alt={title}/>
             </NavLink>
           </div>
-          <div className="col-6 col-sm-4 my-3 text-center delete-padre">
+          <div className="col-sm-2 mob"></div>
+          <div className="col-6 col-sm-4 my-3 text-center delete-padre texto-cart">
 
             <h5 className="card-title text-center my-0 py-0 pt-2">
                 <NavLink to={`/item/`+ id} className="product-title" >
@@ -33,6 +35,7 @@ function DetalleItem( { id, title, price, quantity, pictureUrl } ) {
             </svg>
             </button> 
           </div>
+          <div className="col-sm-1"></div>
           </>
     )
 }
