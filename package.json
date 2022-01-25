@@ -14,6 +14,7 @@
     "firebase": "^8.2.3",
     "materialize-css": "^1.0.0-rc.2",
     "react": "^17.0.1",
+    "react-classlist": "^1.1.2",
     "react-dom": "^17.0.1",
     "react-materialize": "^3.9.5",
     "react-router-dom": "^5.2.0",

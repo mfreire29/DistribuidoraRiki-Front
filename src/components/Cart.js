@@ -40,7 +40,7 @@ function Cart({ greeting }) {
                         <span className="px-2">{ greeting }</span> 
                         {
                             unidadesCarro > 0 ?
-                                        <button onClick={ vaciarCarro } className="btn btn-dark mb-2">Vaciar</button>
+                                        <button onClick={ vaciarCarro } className="vaciar btn btn-dark mb-2">Vaciar</button>
                             :
                                 ''
                         }
@@ -49,7 +49,7 @@ function Cart({ greeting }) {
                         {
                             totalCarro !== 0 ?
                                 <div className="container">
-                                    <div className="row">
+                                    <div className="row justify-content-around">
                                         {
                                             carro.map(a => {
                                                 return <DetalleItem key={a.id} id={a.id} price={a.precio} quantity={a.quantity} pictureUrl= { a.pictureUrl } title= { a.title } removeItem= { removeItem } />
@@ -59,10 +59,10 @@ function Cart({ greeting }) {
                                     
                                     <hr/>
                                     <h3 className="text-center">TOTAL: ${ totalCarro }.-
-                                    <NavLink to="/checkout">
+                                    </h3>
+                                    <NavLink className="btn-cart" to="/checkout">
                                         <button className="btn btn-dark mx-4">Finalizar Compra</button>
                                     </NavLink>
-                                    </h3>
                                     </div>
                                 </div>
                                 :
