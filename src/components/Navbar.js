@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import CartWidget from "./CartWidget";
-import { NavLink } from 'react-router-dom'
+import { NavLink, useLocation } from 'react-router-dom'
 import clienteAxios from "./AxiosConfig";
 import whatsapp from '../assets/img/whatsapp.svg'
 
@@ -32,6 +32,7 @@ function Navbar() {
   }, [])
 
 
+  const url = useLocation();
 
   const cerrar = () => {
     setShow(!show)
@@ -66,7 +67,7 @@ function Navbar() {
                   {
                     categories.map(a => {
                       return <li>
-                        <NavLink to={`/category/${a.id}`} className="dropdown-item">
+                        <NavLink onClick={cerrar} to={`/category/${a.id}`} className="dropdown-item">
                           {a.name}
                         </NavLink>
                       </li>
@@ -100,7 +101,13 @@ function Navbar() {
               }
             </div>
           </div>
+            {
+              url.pathname !== '/cart' 
+              ?
               <CartWidget />
+              :
+              ''
+            }
               <div className="whatsapp" >
                 <a href="https://className=tsapp.com/send?phone=5491167166393&text=%Probando">
                   

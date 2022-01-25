@@ -18,7 +18,6 @@ function Cart({ greeting }) {
     
     const { totalCarro, carro, removeItem, unidadesCarro, clear } = useContext(CartContext)
 
-    console.log(carro)
 
     return (
         <div>
