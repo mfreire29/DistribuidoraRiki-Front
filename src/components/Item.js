@@ -47,7 +47,6 @@ function Item({id, title, description, price, off, pictureUrl}) {
                             <>
                             <h3 className="card-text text-center mt-2 product-price"> <span style={{textDecoration: "line-through"}}>${price}</span><b> ${off}.-</b></h3>
                             </>
-
                     }
                     
                     {

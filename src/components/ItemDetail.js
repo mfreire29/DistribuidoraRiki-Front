@@ -2,7 +2,7 @@ import React, { useContext } from 'react'
 import ItemCount from './ItemCount'
 import {CartContext} from '../context/cartContext'
 
-function ItemDetail({ id, title, stock, description, price, pictureUrl }) {
+function ItemDetail({ id, title, stock, description, price, off, pictureUrl }) {
 
     const {addItem, isInCart} = useContext(CartContext)
 
@@ -18,7 +18,14 @@ function ItemDetail({ id, title, stock, description, price, pictureUrl }) {
             <div className="col-xs-12 col-sm-6 p-5 text-center mt-5">
                 <h3>{ title }</h3>
                 <h5>{ description }</h5>
-                <h3 className="mt-2 text-left"><span className="text-danger"><b>${ price }.-</b></span><br/>pesos argentinos</h3>
+                {
+                    off == 0 || off == null || off == '' ?
+                        <h4 className="card-text text-center mt-2"><b>${price}.-</b></h4>
+                    :
+                        <>
+                            <h4 className="card-text text-center mt-2"> <span style={{textDecoration: "line-through"}}>${price}</span><b> ${off}.-</b></h4>
+                        </>
+                }
                 <div className="my-5 text-center">
                     {/* {
                         isInCart(id).length > 0 ?

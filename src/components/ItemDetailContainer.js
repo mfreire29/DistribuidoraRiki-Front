@@ -40,7 +40,7 @@ function ItemDetailContainer() {
                                 </div>
                             </div> 
                         :
-                            <ItemDetail key={producto.id} id={producto.id} title={producto.name} description={producto.description} price={producto.price} pictureUrl={producto.image}/>
+                            <ItemDetail key={producto.id} id={producto.id} title={producto.name} description={producto.description} price={producto.sale} off={producto.off} pictureUrl={producto.image}/>
                     }
                                        
                 </div>
