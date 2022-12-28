@@ -5,15 +5,15 @@ import { CartContext } from '../context/cartContext'
 
 
 
-function Item({id, title, description, price, off, pictureUrl}) {
+function Item({id, title, description, cost, price, off, pictureUrl}) {
 
     const { addItem, isInCart } = useContext(CartContext)
 
     const onAdd = (cantidad) => {
         off == 0 || off == null || off == '' ?
-            addItem(id, title, cantidad, price, pictureUrl)
+            addItem(id, title, cantidad, cost, price, pictureUrl)
             :
-            addItem(id, title, cantidad, off, pictureUrl)
+            addItem(id, title, cantidad, cost, off, pictureUrl)
     }   
 
     return (
