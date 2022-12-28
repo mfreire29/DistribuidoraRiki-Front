@@ -9,8 +9,10 @@ function FormCheckout({ setIdOrden, setNombreComprador }) {
 
     const [nombre, setNombre] = useState('')
     const [email, setEmail] = useState('')
+    const [comentarios, setComentarios] = useState('')
     const [cliente, setCliente] = useState([]);
     const [loader, setLoader] = useState(false)
+    const [error, setError] = useState(false)
     const [emailValidate, setEmailValidate] = useState(false)
     const [ msj, setMsj ] = useState('')
     const [ active, setActive ] = useState(false)
@@ -52,8 +54,10 @@ function FormCheckout({ setIdOrden, setNombreComprador }) {
     }
 
     const finalizarCompra = e => {
+
         e.preventDefault()
 
+        setError(false)
         setLoader(true)
 
         setNombreComprador(nombre)
@@ -64,16 +68,27 @@ function FormCheckout({ setIdOrden, setNombreComprador }) {
             descuento: '0',
             total: totalCarro,
             items: carro,
+            comentarios: comentarios,
+            email: email
         })
             .then(function (response) {
-                setTimeout(() => {
-                    console.log(response);
+                if(response.data.valid !== false){
+                    setTimeout(() => {
+                        console.log(response);
+                        setLoader(false)
+                        setIdOrden(true)
+                        clear()
+                    }, 3000);                
+                } else {
                     setLoader(false)
-                    setIdOrden(true)
-                    clear()
-                }, 3000);                
+                    setError(true)
+                    console.log('entro en error')
+                }
+                    
             })
             .catch(function (error) {
+                setLoader(false)
+                setError(true)
                 console.log(error);
             });
     }
@@ -110,6 +125,11 @@ function FormCheckout({ setIdOrden, setNombreComprador }) {
                                     <div className="form-group mb-3">
                                         <input onChange={e => setEmail(e.target.value)} className="form-control" type="text" placeholder="Email" value={email} readOnly/>
                                     </div>
+                                    <div className="form-group mb-3">
+                                        <textarea maxlength="1000" onChange={e => setComentarios(e.target.value)} className="form-control" placeholder='¿Desea dejar algún comentario o consulta?'>
+                                            
+                                        </textarea>
+                                    </div>
                                 </>
                             :
                                 ''
@@ -123,6 +143,12 @@ function FormCheckout({ setIdOrden, setNombreComprador }) {
                                 </div>
                                 :
                                 ''
+                            }
+                            {
+                                error ?
+                                    <p style={{color: 'red'}}>Lo sentimos, pero tu pedido no puede ser procesado, intenta nuevamento o ponte en contacto con nosotros.</p>
+                                :
+                                    ''
                             }
                             <NavLink to="/cart">
                                 <button className="btn btn-danger m-1">Carrito</button>

@@ -1,5 +1,5 @@
 import React, { useEffect, useState} from 'react'
-import { BrowserRouter, Switch, Route} from 'react-router-dom'
+import { BrowserRouter, Switch, Route, Redirect} from 'react-router-dom'
 import Header from './components/Header'
 import Footer from './components/Footer'
 import ItemDetailContainer from './components/ItemDetailContainer'
@@ -10,13 +10,31 @@ import CartProvider from './context/cartContext'
 import Checkout from './components/Checkout'
 import ScrollToTop from './components/ScrollToTop'
 import Search from './components/Search'
+import image from './assets/img/1x/close.png'
 
 const App = () => {
 
   const [listado, setListado] = useState([])
   const [loader, setLoader] = useState(true)
+  const [open, setOpen] = useState({ open: false})
 
   useEffect(() => {
+
+    const isOpen = async () => {
+      //console.log("empieza el getmepresa");
+      await clienteAxios
+        .get(`/tienda`)
+        .then((res) => {
+          const data = res.data;
+          setOpen(data)
+        })
+        .catch((err) => {
+          console.log(err);
+          setOpen(...open, { open: 0 })
+        });
+    };
+
+    isOpen();
 
     const getProducts = async () => {
       //console.log("empieza el getmepresa");
@@ -43,7 +61,9 @@ const App = () => {
         <BrowserRouter>
         <Header/>
         <ScrollToTop />
-        <Switch>
+        {
+          open.open === 1 ?
+          <Switch>
           <Route exact path="/">
             <ItemListContainer greeting="Novedades" data={ listado } loader={ loader } />
           </Route>
@@ -63,6 +83,13 @@ const App = () => {
             <Search greeting="Finalizando tu Compra" loader={ loader }/>
           </Route>
         </Switch>
+          :
+            <div className='container p-5 text-center'>
+              <img src={image} className='img-fluid' style={{maxWidth: '300px'}}/>
+              <h2 className='p-5 text-center'>{ open.mensaje }</h2>
+            </div>
+          
+        }
         <Footer/>
       </BrowserRouter>
       </CartProvider>

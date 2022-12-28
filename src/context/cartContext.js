@@ -36,6 +36,7 @@ const CartProvider = (props) => {
           localStorage.setItem('unidades', JSON.stringify([]))
         }
         if(carro.length === 0){ setTotalCarro(0)}
+        console.log('ESTE ES EL CARRO: ', carro)
       }, [carro, carroStorage, totalCarro]);
 
     const notify = mensaje => toast.info(mensaje, 
@@ -45,21 +46,21 @@ const CartProvider = (props) => {
         }
     );
 
-    const addItem = (item, title, quantity, price, pictureUrl, stock) => {        
+    const addItem = (item, title, quantity, cost, price, pictureUrl, stock) => {        
         if(isInCart(item).length === 1) {
             let un = carro.filter(a => a.id === item)
             const carrito = carro.filter(a => a.id !== item)
             if((quantity + un[0].quantity) > stock) {
                 notify('No hay suficiente stock')
             } else {
-                setCarro([...carrito, { id: item, title: title, quantity: (quantity + un[0].quantity) , precio: (price.replace(',', '.')), pictureUrl: pictureUrl, total: ((price.replace(',', '.'))*(quantity + un[0].quantity)) }])
+                setCarro([...carrito, { id: item, title: title, quantity: (quantity + un[0].quantity) , precio: (price.replace(',', '.')), costo: (cost.replace(',', '.')), pictureUrl: pictureUrl, total: ((price.replace(',', '.'))*(quantity + un[0].quantity)) }])
                 setUnidadesCarro(unidadesCarro - un[0].quantity + (quantity + un[0].quantity))
                 setTotalCarro(totalCarro - (un[0].precio * un[0].quantity) + ((price.replace(',', '.'))*(quantity + un[0].quantity)))
                 notify('✅ Producto Agregado 😁')
             }
         } else {
-            setCarro([...carro, { id: item, title: title, quantity: quantity, precio: (price.replace(',', '.')), pictureUrl: pictureUrl, total: ((price.replace(',', '.'))*quantity) }])
-            setCarroFinal([...carroFinal, { id: item, title: title, quantity: quantity, precio: (price.replace(',', '.')), total: ((price.replace(',', '.'))*quantity) }])
+            setCarro([...carro, { id: item, title: title, quantity: quantity, precio: (price.replace(',', '.')), costo: (cost.replace(',', '.')), pictureUrl: pictureUrl, total: ((price.replace(',', '.'))*quantity) }])
+            setCarroFinal([...carroFinal, { id: item, title: title, quantity: quantity, precio: (price.replace(',', '.')), costo: (cost.replace(',', '.')), total: ((price.replace(',', '.'))*quantity) }])
             setUnidadesCarro(unidadesCarro + quantity)
             setTotalCarro(totalCarro + ((price.replace(',', '.'))*quantity))
             notify('✅ Producto Agregado 😁')
